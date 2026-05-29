@@ -2,8 +2,8 @@ package com.parking.infrastructure.config;
 
 import com.parking.infrastructure.persistence.repository.sql.jpa.CellJPARepository;
 
-import org.springframework.boot.health.contributor.Health;
-import org.springframework.boot.health.contributor.HealthIndicator;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
 @Component("parkingCapacity")
@@ -18,7 +18,9 @@ public class ParkingHealthIndicator implements HealthIndicator {
     @Override
     public Health health() {
         try {
+
             long totalCells = cellRepository.count();
+
             long activeCells = cellRepository.findAll()
                     .stream()
                     .filter(c -> Boolean.TRUE.equals(c.isActive()))
@@ -37,6 +39,7 @@ public class ParkingHealthIndicator implements HealthIndicator {
                     .build();
 
         } catch (Exception e) {
+
             return Health.down()
                     .withDetail("error", e.getMessage())
                     .build();

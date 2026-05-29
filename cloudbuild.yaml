@@ -1,7 +1,7 @@
 steps:
 
   # ── Paso 1: Compilar y testear el backend ────────────────────────
-  - name: 'maven:3.9-eclipse-temurin-26'
+  - name: 'maven:3.9-eclipse-temurin-21'
     id: 'build-and-test'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
@@ -12,7 +12,7 @@ steps:
       - '-q'
 
   # ── Paso 2: Análisis estático con SonarCloud ─────────────────────
-  - name: 'maven:3.9-eclipse-temurin-26'
+  - name: 'maven:3.9-eclipse-temurin-21'
     id: 'sonar-analysis'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
