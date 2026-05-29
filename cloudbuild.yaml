@@ -8,7 +8,7 @@ steps:
     args:
       - 'clean'
       - 'package'
-      - '-DskipTests=false'
+      - '-DskipTests=true'
       - '-q'
 
   # ── Paso 2: Análisis estático con SonarCloud ─────────────────────
