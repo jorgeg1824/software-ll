@@ -1,5 +1,0 @@
-package com.parking.infrastructure.rest.dto;
-
-public class VehicleInforResponse {
-
-}

@@ -1,15 +1,22 @@
-# Backend
+# ── Eclipse workspace ────────────────────────────────────────────────
+Backend/.metadata/
+Backend/.recommenders/
+Backend/*.launch
+Backend/.settings/
+
+# ── Backend ──────────────────────────────────────────────────────────
 Backend/parking/target/
 Backend/parking/.idea/
 Backend/parking/*.iml
 
-# Frontend
+# ── Frontend ─────────────────────────────────────────────────────────
 Frontend/parking-frontend/node_modules/
 Frontend/parking-frontend/dist/
 Frontend/parking-frontend/.env
 Frontend/parking-frontend/.env.*
 !Frontend/parking-frontend/.env.example
 
-# General
+# ── General ──────────────────────────────────────────────────────────
 .DS_Store
 Thumbs.db
+*.log

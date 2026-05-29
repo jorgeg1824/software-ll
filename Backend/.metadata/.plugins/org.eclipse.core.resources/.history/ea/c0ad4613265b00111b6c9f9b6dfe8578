@@ -1,5 +1,0 @@
-package com.parking.infrastructure.persistence.repository.sql.jpa;
-
-public class catalogo {
-
-}
