@@ -1,14 +1,18 @@
 steps:
 
   # ── Paso 1: Compilar y testear el backend ────────────────────────
-  - name: 'maven:3.9-eclipse-temurin-26'
+  - name: 'maven:3.9.9-eclipse-temurin-26'
     id: 'build-and-test'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
-    args: ['package', '-DskipTests=false', '-q']
+    args:
+      - 'clean'
+      - 'package'
+      - '-DskipTests=false'
+      - '-q'
 
   # ── Paso 2: Análisis estático con SonarCloud ─────────────────────
-  - name: 'maven:3.9-eclipse-temurin-26'
+  - name: 'maven:3.9.9-eclipse-temurin-26'
     id: 'sonar-analysis'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
@@ -31,7 +35,7 @@ steps:
       - '.'
     waitFor: ['sonar-analysis']
 
-  # ── Paso 4: Push al Artifact Registry ───────────────────────────
+  # ── Paso 4: Push al Artifact Registry ────────────────────────────
   - name: 'gcr.io/cloud-builders/docker'
     id: 'push-image'
     args:
