@@ -1,0 +1,15 @@
+# Backend
+Backend/parking/target/
+Backend/parking/.idea/
+Backend/parking/*.iml
+
+# Frontend
+Frontend/parking-frontend/node_modules/
+Frontend/parking-frontend/dist/
+Frontend/parking-frontend/.env
+Frontend/parking-frontend/.env.*
+!Frontend/parking-frontend/.env.example
+
+# General
+.DS_Store
+Thumbs.db

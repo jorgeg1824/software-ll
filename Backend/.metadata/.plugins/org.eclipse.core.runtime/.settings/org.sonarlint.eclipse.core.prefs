@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+servers/SonarQube_Cloud%2Fjorgeg1824/auth=true
+servers/SonarQube_Cloud%2Fjorgeg1824/org=jorgeg1824
+servers/SonarQube_Cloud%2Fjorgeg1824/region=EU
+servers/SonarQube_Cloud%2Fjorgeg1824/url=https\://sonarcloud.io

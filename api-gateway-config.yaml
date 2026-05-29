@@ -1,0 +1,107 @@
+swagger: "2.0"
+info:
+  title: Parking System API
+  description: API de gestión de parqueaderos
+  version: "1.0.0"
+host: parking-backend-161379807540.us-central1.run.app
+schemes:
+  - https
+produces:
+  - application/json
+
+securityDefinitions:
+  firebase:
+    authorizationUrl: ""
+    flow: implicit
+    type: oauth2
+    x-google-issuer: "https://securetoken.google.com/project-7bd198ee-ecbf-4324-bd0"
+    x-google-jwks_uri: "https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com"
+    x-google-audiences: "project-7bd198ee-ecbf-4324-bd0"
+
+paths:
+
+  /api/v1/tickets/entry:
+    post:
+      summary: Registrar ingreso de vehículo
+      operationId: registerEntry
+      security:
+        - firebase: []
+      x-google-backend:
+        address: https://parking-backend-161379807540.us-central1.run.app/api/v1/tickets/entry
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+      responses:
+        "201":
+          description: Ticket generado
+        "400":
+          description: Datos inválidos
+        "409":
+          description: Conflicto de negocio
+
+  /api/v1/vehicles/plate/{plate}:
+    get:
+      summary: Buscar vehículo por placa
+      operationId: findVehicleByPlate
+      security:
+        - firebase: []
+      x-google-backend:
+        address: https://parking-backend-161379807540.us-central1.run.app/api/v1/vehicles/plate/{plate}
+      parameters:
+        - in: path
+          name: plate
+          type: string
+          required: true
+      responses:
+        "200":
+          description: Vehículo encontrado
+        "404":
+          description: No encontrado
+
+  /api/v1/vehicles/types:
+    get:
+      summary: Listar tipos de vehículo
+      operationId: findVehicleTypes
+      security:
+        - firebase: []
+      x-google-backend:
+        address: https://parking-backend-161379807540.us-central1.run.app/api/v1/vehicles/types
+      responses:
+        "200":
+          description: Lista de tipos
+
+  /api/v1/cells/available:
+    get:
+      summary: Listar celdas disponibles
+      operationId: findAvailableCells
+      security:
+        - firebase: []
+      x-google-backend:
+        address: https://parking-backend-161379807540.us-central1.run.app/api/v1/cells/available
+      responses:
+        "200":
+          description: Lista de celdas
+
+  /api/v1/parameters:
+    get:
+      summary: Listar parámetros
+      operationId: findParameters
+      security:
+        - firebase: []
+      x-google-backend:
+        address: https://parking-backend-161379807540.us-central1.run.app/api/v1/parameters
+      responses:
+        "200":
+          description: Lista de parámetros
+
+  /actuator/health:
+    get:
+      summary: Health check
+      operationId: healthCheck
+      x-google-backend:
+        address: https://parking-backend-161379807540.us-central1.run.app/actuator/health
+      responses:
+        "200":
+          description: Estado del sistema

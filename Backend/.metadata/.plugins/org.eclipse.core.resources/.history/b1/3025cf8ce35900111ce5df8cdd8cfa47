@@ -1,0 +1,5 @@
+package com.parking.infrastructure.config;
+
+public class FirebaseTokenFilter {
+
+}

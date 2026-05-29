@@ -1,0 +1,44 @@
+-- ============================================================
+-- Datos de prueba para el endpoint de ingreso de vehículos
+-- INSERT OR IGNORE: no falla si los datos ya existen
+-- ============================================================
+
+-- Estados del ticket (requerido por las queries JPQL de validación)
+INSERT INTO "EstadoTicket" (id_estado, nombre_estado, descripcion_estado)
+VALUES
+    ('a1b2c3d4-0001-0001-0001-000000000001', 'Abierto',  'Vehículo dentro del parqueadero'),
+    ('a1b2c3d4-0001-0001-0001-000000000002', 'Cerrado', 'Vehículo salió del parqueadero')
+ON CONFLICT (id_estado) DO NOTHING;
+
+-- Tipo de vehículo
+INSERT INTO "TipoVehiculo" (id_tipo_vehiculo, nombre_tipo_vehiculo)
+VALUES
+    ('b2c3d4e5-0002-0002-0002-000000000001', 'Automóvil'),
+    ('b2c3d4e5-0002-0002-0002-000000000002', 'Motocicleta'),
+    ('b2c3d4e5-0002-0002-0002-000000000003', 'Camión')
+ON CONFLICT (id_tipo_vehiculo) DO NOTHING;
+
+-- Vehículo de prueba
+INSERT INTO "Vehiculo" (id_vehiculo, placa, id_tipo_vehiculo)
+VALUES
+    ('c3d4e5f6-0003-0003-0003-000000000001', 'ABC123', 'b2c3d4e5-0002-0002-0002-000000000001')
+ON CONFLICT (id_vehiculo) DO NOTHING;
+
+-- Tipo de celda
+INSERT INTO "TipoCelda" (id_tipo_celda, nombre_tipo)
+VALUES
+    ('d4e5f6a7-0004-0004-0004-000000000001', 'Estándar')
+ON CONFLICT (id_tipo_celda) DO NOTHING;
+
+-- Zona
+INSERT INTO "Zona" (id_zona, nombre_zona)
+VALUES
+    ('e5f6a7b8-0005-0005-0005-000000000001', 'Zona A')
+ON CONFLICT (id_zona) DO NOTHING;
+
+-- Celdas de prueba
+INSERT INTO "Celda" (id_celda, nombre_celda, id_tipo_celda, id_zona, es_activo)
+VALUES
+    ('f6a7b8c9-0006-0006-0006-000000000001', 'A-01', 'd4e5f6a7-0004-0004-0004-000000000001', 'e5f6a7b8-0005-0005-0005-000000000001', true),
+    ('f6a7b8c9-0006-0006-0006-000000000002', 'A-02', 'd4e5f6a7-0004-0004-0004-000000000001', 'e5f6a7b8-0005-0005-0005-000000000001', true)
+ON CONFLICT (id_celda) DO NOTHING;

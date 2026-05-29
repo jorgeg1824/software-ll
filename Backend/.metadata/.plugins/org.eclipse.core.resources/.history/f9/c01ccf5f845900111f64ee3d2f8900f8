@@ -1,0 +1,199 @@
+package com.parking.infrastructure.controller;
+
+import java.util.Locale;
+import java.util.Objects;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import com.parking.crosscuting.exception.BusinessException;
+import com.parking.crosscuting.messagescatalog.MessagesEnum;
+import com.parking.infrastructure.rest.dto.ErrorResponse;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    private static final Logger LOG =
+            LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
+
+    public GlobalExceptionHandler(
+            final MessageSource messageSource,
+            final LocaleResolver localeResolver) {
+
+        this.messageSource = messageSource;
+        this.localeResolver = localeResolver;
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationError(
+            final MethodArgumentNotValidException ex,
+            final HttpServletRequest request) {
+
+        final Locale locale = localeResolver.resolveLocale(request);
+
+        final String enumKey = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .findFirst()
+                .map(error -> error.getDefaultMessage())
+                .filter(Objects::nonNull)
+                .orElse(MessagesEnum.GENERAL_UNEXPECTED_ERROR.name());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(buildError(
+                        enumKey,
+                        HttpStatus.BAD_REQUEST,
+                        locale
+                ));
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessError(
+            final BusinessException ex,
+            final HttpServletRequest request) {
+
+        final Locale locale = localeResolver.resolveLocale(request);
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(buildError(
+                        ex.getMessagesEnum().name(),
+                        HttpStatus.CONFLICT,
+                        locale
+                ));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleDomainInvariantError(
+            final IllegalArgumentException ex,
+            final HttpServletRequest request) {
+
+        final Locale locale = localeResolver.resolveLocale(request);
+
+        return ResponseEntity
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(buildError(
+                        ex.getMessage(),
+                        HttpStatus.UNPROCESSABLE_ENTITY,
+                        locale
+                ));
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<Void> handleNoResourceFound(
+            final NoResourceFoundException ex) {
+
+        LOG.debug("Static resource not found: {}", ex.getResourcePath());
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleUnexpectedError(
+            final Exception ex,
+            final HttpServletRequest request) {
+
+        LOG.error("Unexpected error captured", ex);
+
+        final Locale locale = localeResolver.resolveLocale(request);
+
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(buildError(
+                        MessagesEnum.GENERAL_UNEXPECTED_ERROR.name(),
+                        HttpStatus.INTERNAL_SERVER_ERROR,
+                        locale
+                ));
+    }
+
+    private ErrorResponse buildError(
+            final String key,
+            final HttpStatus status,
+            final Locale locale) {
+
+        final String title = resolveMessage(
+                key + ".title",
+                locale,
+                fallbackTitle(key)
+        );
+
+        final String detail = resolveMessage(
+                key + ".detail",
+                locale,
+                fallbackDetail(key)
+        );
+
+        return new ErrorResponse(
+                title,
+                detail,
+                status.value()
+        );
+    }
+
+    private String resolveMessage(
+            final String key,
+            final Locale locale,
+            final String fallback) {
+
+        try {
+
+            final String message =
+                    messageSource.getMessage(key, null, locale);
+
+            return (message == null || message.equals(key))
+                    ? fallback
+                    : message;
+
+        } catch (RuntimeException ex) {
+
+            LOG.debug("Message key not found: {}", key);
+
+            return fallback;
+        }
+    }
+
+    private String fallbackTitle(final String key) {
+
+        try {
+
+            return MessagesEnum.valueOf(key).getTitle();
+
+        } catch (IllegalArgumentException ex) {
+
+            return MessagesEnum
+                    .GENERAL_UNEXPECTED_ERROR
+                    .getTitle();
+        }
+    }
+
+    private String fallbackDetail(final String key) {
+
+        try {
+
+            return MessagesEnum.valueOf(key).getContent();
+
+        } catch (IllegalArgumentException ex) {
+
+            return MessagesEnum
+                    .GENERAL_UNEXPECTED_ERROR
+                    .getContent();
+        }
+    }
+}

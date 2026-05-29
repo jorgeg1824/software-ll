@@ -1,0 +1,5 @@
+package com.parking.infrastructure.controller;
+
+public class VehicleQueryController {
+
+}
