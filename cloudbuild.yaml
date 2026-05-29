@@ -1,14 +1,14 @@
 steps:
 
   # ── Paso 1: Tests del backend ─────────────────────────────────────
-  - name: 'maven:3.9-eclipse-temurin-24'
+  - name: 'maven:3.9-eclipse-temurin-26'
     id: 'unit-tests'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
     args: ['test', '-q']
 
   # ── Paso 2: Análisis SonarCloud ──────────────────────────────────
-  - name: 'maven:3.9-eclipse-temurin-24'
+  - name: 'maven:3.9-eclipse-temurin-26'
     id: 'sonar-analysis'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
