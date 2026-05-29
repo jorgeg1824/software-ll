@@ -1701,3 +1701,91 @@ Caused by: org.eclipse.lsp4j.jsonrpc.ResponseErrorException: Internal error.
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:15:31.719
+!MESSAGE [Info] Document is null for editor: SecurityConfig.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:15:31.746
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/config/SecurityConfig.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:15:34.070
+!MESSAGE [Info] Document is null for editor: CaptchaController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:15:34.070
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/controller/CaptchaController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:15:35.149
+!MESSAGE [Info] Document is null for editor: application.yml
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:15:35.150
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/resources/application.yml
+
+!ENTRY org.eclipse.lsp4e 2 0 2026-05-29 01:15:55.345
+!MESSAGE Javadoc unavailable. Failed to obtain it.
+!STACK 0
+java.lang.InterruptedException
+	at java.base/java.util.concurrent.CompletableFuture.reportGet(CompletableFuture.java:386)
+	at java.base/java.util.concurrent.CompletableFuture.get(CompletableFuture.java:2096)
+	at org.eclipse.lsp4e.jdt.LSJavaHoverProvider.getHoverInfo2(LSJavaHoverProvider.java:66)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:165)
+	at org.eclipse.jdt.internal.ui.text.java.hover.BestMatchHover.getHoverInfo2(BestMatchHover.java:131)
+	at org.eclipse.jdt.internal.ui.text.java.hover.JavaEditorTextHoverProxy.getHoverInfo2(JavaEditorTextHoverProxy.java:89)
+	at org.eclipse.jface.text.TextViewerHoverManager$1.run(TextViewerHoverManager.java:155)
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:16:02.725
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/persistence/repository/sql/jpa/entity/CatalogoNotificacionJPAEntity.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:17:31.816
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/persistence/repository/sql/jpa/CatalogoNotificacionJPARepository.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:32.084
+!MESSAGE [Info] Document is null for editor: SecurityConfig.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:32.099
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/config/SecurityConfig.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:33.616
+!MESSAGE [Info] Document is null for editor: NotificationCatalogController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:33.616
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/controller/NotificationCatalogController.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:35.461
+!MESSAGE [Info] Document is null for editor: catalogo.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:35.462
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/persistence/repository/sql/jpa/CatalogoNotificacionJPARepository.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:36.518
+!MESSAGE [Info] Document is null for editor: catalogo.java
+
+!ENTRY com.microsoft.copilot.eclipse 1 0 2026-05-29 01:20:36.518
+!MESSAGE [Info] Completion handler is refreshed for the document: file:///C:/Users/geor1/OneDrive/Documentos/Software%20ll/Backend/parking/src/main/java/com/parking/infrastructure/persistence/repository/sql/jpa/entity/CatalogoNotificacionJPAEntity.java
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2026-05-29 01:21:03.226
+!MESSAGE Operator called default onErrorDropped
+!STACK 0
+reactor.core.Exceptions$ErrorCallbackNotImplemented: java.lang.IllegalStateException: serverCapabilities unexpectedly null after initialization
+Caused by: java.lang.IllegalStateException: serverCapabilities unexpectedly null after initialization
+	at org.eclipse.lsp4e.LanguageServerWrapper.lambda$20(LanguageServerWrapper.java:1043)
+	at java.base/java.util.concurrent.CompletableFuture.uniComposeStage(CompletableFuture.java:1187)
+	at java.base/java.util.concurrent.CompletableFuture.thenCompose(CompletableFuture.java:2341)
+	at org.eclipse.lsp4e.LanguageServerWrapper.getServerCapabilitiesAsync(LanguageServerWrapper.java:1037)
+	at org.eclipse.lsp4e.LanguageServiceAccessor.capabilitiesComplyAsync(LanguageServiceAccessor.java:226)
+	at org.eclipse.lsp4e.LanguageServiceAccessor.getStartedWrappersAsync(LanguageServiceAccessor.java:475)
+	at org.eclipse.lsp4e.LanguageServiceAccessor.getStartedWrappersAsync(LanguageServiceAccessor.java:461)
+	at org.eclipse.lsp4e.LanguageServers$LanguageServerProjectExecutor.getServers(LanguageServers.java:332)
+	at org.eclipse.lsp4e.LanguageServers.executeOnServers(LanguageServers.java:441)
+	at org.eclipse.lsp4e.LanguageServers.collectAll(LanguageServers.java:92)
+	at org.eclipse.lsp4e.LanguageServers.collectAll(LanguageServers.java:75)
+	at org.springframework.ide.eclipse.boot.dash.liveprocess.DefaultLiveProcessCommandExecutor.executeCommand(DefaultLiveProcessCommandExecutor.java:54)
+	at org.springframework.ide.eclipse.boot.dash.BootDashActivator$1.stateChanged(BootDashActivator.java:219)
+	at org.springframework.ide.eclipse.boot.dash.BootDashActivator$1.stateChanged(BootDashActivator.java:1)
+	at org.springframework.ide.eclipse.boot.dash.util.RunStateTracker.updateOwnerStatesAndFireEvents(RunStateTracker.java:216)
+	at org.springframework.ide.eclipse.boot.dash.util.RunStateTracker$1.gotValue(RunStateTracker.java:151)
+	at org.springframework.ide.eclipse.boot.dash.util.RunStateTracker$1.gotValue(RunStateTracker.java:1)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression.changed(LiveExpression.java:137)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveExpression.refresh(LiveExpression.java:81)
+	at org.springsource.ide.eclipse.commons.livexp.core.LiveVariable.setValue(LiveVariable.java:46)
+	at org.springframework.ide.eclipse.boot.dash.util.AbstractPollingAppReadyStateMonitor$1.run(AbstractPollingAppReadyStateMonitor.java:51)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
