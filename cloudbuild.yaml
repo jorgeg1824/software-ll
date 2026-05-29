@@ -14,9 +14,6 @@ steps:
     entrypoint: 'mvn'
     args:
       - 'sonar:sonar'
-      - '-Dsonar.projectKey=TU_USUARIO_parking-system'
-      - '-Dsonar.organization=TU_ORGANIZATION_KEY'
-      - '-Dsonar.host.url=https://sonarcloud.io'
       - '-Dsonar.token=$$SONAR_TOKEN'
     secretEnv: ['SONAR_TOKEN']
     waitFor: ['build-and-test']
