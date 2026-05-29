@@ -1,7 +1,7 @@
 steps:
 
   # ── Paso 1: Compilar y testear el backend ────────────────────────
-  - name: 'maven:3.9.9-eclipse-temurin-26'
+  - name: 'maven:3.9-eclipse-temurin-26'
     id: 'build-and-test'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
@@ -12,15 +12,17 @@ steps:
       - '-q'
 
   # ── Paso 2: Análisis estático con SonarCloud ─────────────────────
-  - name: 'maven:3.9.9-eclipse-temurin-26'
+  - name: 'maven:3.9-eclipse-temurin-26'
     id: 'sonar-analysis'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
     args:
       - 'sonar:sonar'
       - '-Dsonar.token=$$SONAR_TOKEN'
-    secretEnv: ['SONAR_TOKEN']
-    waitFor: ['build-and-test']
+    secretEnv:
+      - 'SONAR_TOKEN'
+    waitFor:
+      - 'build-and-test'
 
   # ── Paso 3: Build imagen Docker ──────────────────────────────────
   - name: 'gcr.io/cloud-builders/docker'
@@ -33,7 +35,8 @@ steps:
       - '-t'
       - 'us-central1-docker.pkg.dev/$PROJECT_ID/parking-repo/parking-backend:latest'
       - '.'
-    waitFor: ['sonar-analysis']
+    waitFor:
+      - 'sonar-analysis'
 
   # ── Paso 4: Push al Artifact Registry ────────────────────────────
   - name: 'gcr.io/cloud-builders/docker'
@@ -42,7 +45,8 @@ steps:
       - 'push'
       - '--all-tags'
       - 'us-central1-docker.pkg.dev/$PROJECT_ID/parking-repo/parking-backend'
-    waitFor: ['build-image']
+    waitFor:
+      - 'build-image'
 
   # ── Paso 5: Deploy en Cloud Run ──────────────────────────────────
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -57,6 +61,8 @@ steps:
       - '--platform=managed'
       - '--allow-unauthenticated'
       - '--add-cloudsql-instances=$PROJECT_ID:us-central1:parking-db'
+
+      # Secrets
       - '--set-secrets=DB_PASSWORD=DB_PASSWORD:latest'
       - '--set-secrets=DB_USER=DB_USER:latest'
       - '--set-secrets=DB_NAME=DB_NAME:latest'
@@ -65,13 +71,18 @@ steps:
       - '--set-secrets=RECAPTCHA_SECRET=RECAPTCHA_SECRET:latest'
       - '--set-secrets=MAIL_USERNAME=MAIL_USERNAME:latest'
       - '--set-secrets=MAIL_PASSWORD=MAIL_PASSWORD:latest'
+
+      # Variables de entorno
       - '--set-env-vars=SPRING_PROFILES_ACTIVE=prod'
       - '--set-env-vars=GOOGLE_CLOUD_PROJECT=$PROJECT_ID'
+
+      # Recursos
       - '--memory=512Mi'
       - '--min-instances=0'
       - '--max-instances=2'
       - '--timeout=120'
-    waitFor: ['push-image']
+    waitFor:
+      - 'push-image'
 
 availableSecrets:
   secretManager:
