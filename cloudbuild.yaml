@@ -11,6 +11,18 @@ steps:
       - '-DskipTests=true'
       - '-q'
 
+  # ── Paso de diagnóstico (TEMPORAL) ──────────────────────────────
+  - name: 'bash'
+    id: 'check-token'
+    secretEnv:
+      - 'SONAR_TOKEN'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'echo "Token length: $${#SONAR_TOKEN}" && echo "Token starts with: $${SONAR_TOKEN:0:4}"'
+    waitFor:
+      - 'build-and-test'
+
   # ── Paso 2: Análisis estático con SonarCloud ─────────────────────
   - name: 'maven:3.9-eclipse-temurin-21'
     id: 'sonar-analysis'
@@ -22,7 +34,7 @@ steps:
     secretEnv:
       - 'SONAR_TOKEN'
     waitFor:
-      - 'build-and-test'
+      - 'check-token'
 
   # ── Paso 3: Build imagen Docker ──────────────────────────────────
   - name: 'gcr.io/cloud-builders/docker'
