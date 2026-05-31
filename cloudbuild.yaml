@@ -28,14 +28,13 @@ steps:
     id: 'sonar-analysis'
     dir: 'Backend/parking'
     entrypoint: 'mvn'
-    env:
-      - 'SONAR_TOKEN=$$SONAR_TOKEN'
     args:
       - 'sonar:sonar'
       - '-Dsonar.projectKey=jorgeg1824_software-ll'
       - '-Dsonar.organization=jorgeg1824'
       - '-Dsonar.host.url=https://sonarcloud.io'
       - '-Dsonar.scanner.skipJreProvisioning=true'
+      - '-Dsonar.token=$$SONAR_TOKEN'
     secretEnv:
       - 'SONAR_TOKEN'
     waitFor:
