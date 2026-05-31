@@ -30,6 +30,9 @@ steps:
     entrypoint: 'mvn'
     args:
       - 'sonar:sonar'
+      - '-Dsonar.projectKey=jorgeg1824_software-ll'
+      - '-Dsonar.organization=jorgeg1824'
+      - '-Dsonar.host.url=https://sonarcloud.io'
       - '-Dsonar.token=$$SONAR_TOKEN'
     secretEnv:
       - 'SONAR_TOKEN'
