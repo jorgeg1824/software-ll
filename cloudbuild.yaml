@@ -1,6 +1,6 @@
 steps:
 
-  # ── Paso 1: Compilar y testear el backend ────────────────────────
+  # ── Paso 1: Compilar el backend ──────────────────────────────────
   - name: 'maven:3.9-eclipse-temurin-21'
     id: 'build-and-test'
     dir: 'Backend/parking'
@@ -10,18 +10,6 @@ steps:
       - 'package'
       - '-DskipTests=true'
       - '-q'
-
-  # ── Paso de diagnóstico (TEMPORAL) ──────────────────────────────
-  - name: 'bash'
-    id: 'check-token'
-    secretEnv:
-      - 'SONAR_TOKEN'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - 'echo "Token length: $${#SONAR_TOKEN}" && echo "Token starts with: $${SONAR_TOKEN:0:4}"'
-    waitFor:
-      - 'build-and-test'
 
   # ── Paso 2: Análisis estático con SonarCloud ─────────────────────
   - name: 'sonarsource/sonar-scanner-cli:latest'
@@ -37,7 +25,7 @@ steps:
       - 'SONAR_TOKEN'
     dir: 'Backend/parking'
     waitFor:
-      - 'check-token'
+      - 'build-and-test'
 
   # ── Paso 3: Build imagen Docker ──────────────────────────────────
   - name: 'gcr.io/cloud-builders/docker'
